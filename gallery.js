@@ -1,17 +1,7 @@
 import cards from './gallery-items.js';
-
-const imageContainer = document.querySelector('.js-gallery');
-const modalWindow = document.querySelector('.js-lightbox');
-const modalImage = document.querySelector('.lightbox__image');
-const buttonCloseModal = document.querySelector('button[data-action = "close-lightbox"]');
-const modalOverlay = document.querySelector('.lightbox__overlay');
-
-
-const cardsMarkup = createCardsMarkup(cards);
-
-imageContainer.insertAdjacentHTML('beforeend', cardsMarkup);
+import refs from './dom.js';
     
-imageContainer.addEventListener('click', (e) => {
+refs.imageContainer.addEventListener('click', (e) => {
     e.preventDefault();
     const imageClick = e.target.classList.contains('gallery__image');
 
@@ -22,9 +12,9 @@ imageContainer.addEventListener('click', (e) => {
     modalOpen(e);
 })
 
-buttonCloseModal.addEventListener('click', onButtonCloseModal);
+refs.buttonCloseModal.addEventListener('click', onButtonCloseModal);
 
-modalOverlay.addEventListener('click', onButtonCloseModal);
+refs.modalOverlay.addEventListener('click', onButtonCloseModal);
 
 window.addEventListener('keydown', (e) => {
 
@@ -34,57 +24,38 @@ window.addEventListener('keydown', (e) => {
     onButtonCloseModal();
 });
 
+function getModalImg(e) {
+    refs.modalImage.src = e.target.dataset.source;
+    refs.modalImage.alt = e.target.alt;
+    refs.modalImage.dataset.index = e.target.dataset.index;
+}
 
-function onButtonCloseModal() {
-    const modalIsOpen = modalWindow.classList.contains('is-open');
+function onButtonCloseModal(e) {
+    const modalIsOpen = refs.modalWindow.classList.contains('is-open');
     if (!modalIsOpen) {
         return; 
     }
-    modalWindow.classList.remove('is-open');
+    refs.modalWindow.classList.remove('is-open');
 
-    modalImage.src = '';
-    modalImage.alt = '';
+    getModalImg(e);
 }
 
 function modalOpen(e) {
-    modalWindow.classList.add('is-open');
+    refs.modalWindow.classList.add('is-open');
     addImageInModal(e);
 }
 
 function addImageInModal(e) {
-    modalImage.src = e.target.dataset.source;
-    modalImage.alt = e.target.alt;
-    modalImage.dataset.index = e.target.dataset.index;  
+    getModalImg(e); 
 }
 
-function createCardsMarkup(cards) {
-    return cards.map(({ preview, original, description }, index) => {
-        return `
-    <li class="gallery__item">
-        <a
-            class="gallery__link"
-            href="https://cdn.pixabay.com/photo/2010/12/13/10/13/tulips-2546_1280.jpg"
-        >
-        <img
-            class="gallery__image"
-            src="${preview}"
-            data-source="${original}"
-            data-index="${index}"
-            alt="${description}"
-            />
-        </a>
-    </li>
-        `;
-    }).join('');
-}; 
-
-//----ArrowLeft&Reight-----
+//----ArrowLeft&Right-----
 
 window.addEventListener('keydown', (e) => {
     let index;
 
     if (e.code === "ArrowRight") {
-        onArrowReight();
+        onArrowRight();
     }
 
     if (e.code === "ArrowLeft") {
@@ -95,7 +66,7 @@ window.addEventListener('keydown', (e) => {
 
 
 function onArrowLeft(index) {
-    index = +modalImage.dataset.index;
+    index = +refs.modalImage.dataset.index;
     if (index === 0) {
         setNewSrc(cards.length - 1, 0);
         return;
@@ -103,8 +74,8 @@ function onArrowLeft(index) {
     setNewSrc(index, -1);
 }
 
-function onArrowReight(index) {
-    index = +modalImage.dataset.index;
+function onArrowRight(index) {
+    index = +refs.modalImage.dataset.index;
 
     if (index === cards.length -1) {
         setNewSrc(0, 0);
@@ -114,6 +85,6 @@ function onArrowReight(index) {
 }
 
 function setNewSrc(index, step) {
-    modalImage.dataset.index = `${index + step}`;
-    modalImage.src = cards[index + step].original;
+    refs.modalImage.dataset.index = `${index + step}`;
+    refs.modalImage.src = cards[index + step].original;
 }
