@@ -16,7 +16,7 @@
 изображения в модальном окне. Превью результата посмотри
 [по ссылке](https://take.ms/ZvBD0E).
 
-![Превью](preview.jpg)
+![Превью](https://raw.githubusercontent.com/f957-cua/javascript-homework/main/homework-08/preview.jpg)
 
 Разбей задание на несколько подзадач:
 
