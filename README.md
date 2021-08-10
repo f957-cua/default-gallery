@@ -1,7 +1,8 @@
 # Image-gallery
 
-Viewing the gallery of images with a normal and enlarged state using a modal window. 
-Use "arrow-right" and "arrow-left" in modal windows to flipping foto.
+- Viewing the gallery of images with a normal and enlarged state using a modal window. 
+- Use "arrow-right" and "arrow-left" in modal windows to flipping foto.
+- "ESC", or click on backdrop to exit from modal view.
 
 ## Info
 
